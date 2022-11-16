@@ -73,6 +73,8 @@ function mainMenu(person, people) {
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
+            let personFamilyString = displayPeople(personFamily);
+
             alert(personFamily);
             break;
         case "descendants":
@@ -146,6 +148,8 @@ function displayPerson(person) {
     personInfo += `Weight: ${person.weight}\n`;
     personInfo += `Eye Color: ${person.eyeColor}\n`;
     personInfo += `Occupation: ${person.occupation}\n`;
+   
+
     //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
     alert(personInfo);
 }
@@ -191,3 +195,28 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
+
+function findPersonFamily(personObj={}, peopleArr=[]){
+    let spouse = findById(personObj, peopleArr, "currentSpouse");
+    let parents = findParents(personObj, peopleArr);
+    let siblings = findSibs(personObj, peopleArr);
+
+    return spouse.concat(parents).concat(siblings)
+
+}
+
+function findById (personObj, peopleArr, personPropStr){
+    return people.filter(function(item){return (personObj[personPropStr] === item.id)})
+}
+
+function findParents(personObj, peopleArr){
+    return peopleArr.filter(function(item){
+        return personObj.parents.includes(item.id)
+    })
+}
+
+function findSibs(personObj, peopleArr){
+    return peopleArr.filter(function(item){
+        return personObj.parents.includes(item.parents[0]) || personObj.parents.includes(item.parents[1])
+    })
+}
