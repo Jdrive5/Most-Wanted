@@ -225,6 +225,18 @@ function findPersonFamily(person, people) {
 
 }
 
+function findPersonDescendants(person,people){
+    let filterPeople = people.filter(
+        function(el){
+            if(person.lastName === el.lastName){
+                return true;
+            }
+        }
+    );
+    displayPeople(filterPeople);
+    
+}
+
 
 
 function searchByTraits (people) {
@@ -326,3 +338,16 @@ function searchByEyeColor(people){
     return results;
 };
 
+function searchByUserDefinedTrait(people){
+    let userInputProp = prompt("What trait would you like to search?")
+    let userInputValue = prompt("Please enter the value you would like to search:")
+    let results = people.filter(
+        function(person){
+            if (person[userInputProp] === userInputValue){
+                return true;
+            }    
+        }
+    );
+    console.log(results);
+    return results;
+}
