@@ -196,27 +196,133 @@ function chars(input) {
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
 
-function findPersonFamily(personObj={}, peopleArr=[]){
-    let spouse = findById(personObj, peopleArr, "currentSpouse");
-    let parents = findParents(personObj, peopleArr);
-    let siblings = findSibs(personObj, peopleArr);
+function findPersonFamily(person, people) {
+    let filterSpouse = people.filter(
+        function(el){
+            if (person.id === el.currentSpouse){
+                return true;
+            }
+        
+        });
+        let filterParents = people.filter(
+            function(el){
+                if (person.parents.includes(el.id)){
+                    return true;
+                }
+            
+            });
+        let resultsThree = people.filter(
+            function(el){
+                if(person.lastName === el.lastName && person.parents.includes(el.id)){
 
-    return spouse.concat(parents).concat(siblings)
+                }
+            
+    });
+        displayPeople(filterSpouse);
+        displayPeople(filterParents);
+        displayPeople(resultsThree);
+
 
 }
 
-function findById (personObj, peopleArr, personPropStr){
-    return people.filter(function(item){return (personObj[personPropStr] === item.id)})
+
+
+function searchByTraits (people) {
+    let userInput = prompt (`Please what trait you'd like to search by: \ngender\ndob\nheight\nweight\neye color:`)
+    let results;
+
+    switch (userInput) {
+        case "gender":
+            results = searchByGender(people)
+            break;
+
+        case "dob":
+            results = searchByBirthday(people)
+            break;
+
+        case "height":
+            results = searchByHeight(people)
+            break;
+
+        case "weight":
+            results = searchByWeight(people)
+            break;
+
+        case "eye color":
+            results = searchByEyeColor(people)
+            break;
+            
+        default:
+            searchByTraits(people)
+            break;
+    }
+    console.log(results);
+    return results;
+
 }
 
-function findParents(personObj, peopleArr){
-    return peopleArr.filter(function(item){
-        return personObj.parents.includes(item.id)
-    })
-}
+function searchByGender(people){
+    let userInput = prompt("Please choose a gender: \n female\n male");
+    let results = people.filter(
+        function(person){
+            if (userInput === person.gender){
+                return true;
+            }
+        }
+    );
+    console.log(results);
+    return results;
+};
 
-function findSibs(personObj, peopleArr){
-    return peopleArr.filter(function(item){
-        return personObj.parents.includes(item.parents[0]) || personObj.parents.includes(item.parents[1])
-    })
-}
+function searchByBirthday(people){
+    let userInput = prompt("Please enter a date of birth as m/dd/yy:");
+    let results = people.filter(
+        function(person){
+            if (userInput === person.dob){
+                return true;
+            }
+        }
+    );
+    console.log(results);
+    return results;
+};
+
+function searchByHeight(people){
+    let userInput = prompt("Please enter height in inches:");
+    let results = people.filter(
+        function(person){
+            if (userInput === person.height){
+                return true;
+            }
+        }
+    );
+    console.log(results);
+    return results;
+};
+
+function searchByWeight(people){
+    let userInput = prompt("Please enter a weight in lbs:");
+    let results = people.filter(
+        function(person){
+            if (userInput === person.weight){
+                return true;
+            }
+        }
+    );
+    console.log(results);
+    return results;
+};
+
+function searchByEyeColor(people){
+    let userInput = prompt("Please enter a eye color:");
+    let results = people.filter(
+        function(person){
+            if (userInput === person.eyeColor){
+                return true;
+            }
+        }
+    );
+    console.log(results);
+    return results;
+};
+
